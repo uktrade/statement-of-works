@@ -11,6 +11,7 @@ class Role(models.Model):
 
     roleName = models.CharField(max_length = 30)
     roleDescription = models.TextField(blank=True)
+    roleDeliverables = models.TextField(blank=True)
 
 class StatementOfWork(models.Model):
 
