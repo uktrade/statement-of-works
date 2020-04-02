@@ -2,22 +2,31 @@ from django.db import models
 
 # Create your models here.
 
+class Role(models.Model):
+    class Meta:
+        ordering = ['roleName']
+    
+    def __str__(self):
+        return self.roleName
+
+    roleName = models.CharField(max_length = 30)
+    roleDescription = models.TextField(blank=True)
+
 class StatementOfWork(models.Model):
 
     companyName = models.CharField(max_length=30)
     slotCode = models.CharField(max_length=30)
     nominatedWorker = models.BooleanField()  # checkbox
     
-
-    LC = 'LC'
-    DAVE = 'DAVE'
-    NM = 'NM'
+    HM1 = '1'
+    HM2 = '2'
+    HM3 = '3'
     DEFAULT_HM = 'DEFAULT'
 
     hmChoices = [
-        (LC, 'Liz Catherall'),
-        (DAVE, 'Dave Matthews'),
-        (NM, 'Nitesh Malvi'),
+        (HM1, 'option 1'),
+        (HM2, 'option 2'),
+        (HM3, 'option 3'),
         (DEFAULT_HM, 'Please select a hiring manager...')
     ]
 
@@ -27,10 +36,22 @@ class StatementOfWork(models.Model):
         default = DEFAULT_HM
     )
 
-    team = models.CharField(max_length=30)
-    projectDescription = models.TextField()
-    
+    DEFAULT_TEAM = 'DEFAULT'
 
+    teamChoices = [
+        (DEFAULT_TEAM, 'DDaT / Data Team')
+    ]
+
+    team = models.CharField(
+        max_length=30,
+        choices = teamChoices,
+        default = DEFAULT_TEAM
+        )
+
+    projectDescription = models.TextField()
+
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    
     STRATEGY = 'ST'
     TECH = 'T'
     DIGITAL = 'DIG'
@@ -56,38 +77,14 @@ class StatementOfWork(models.Model):
         default=DEFAULT_CCODE
     )
 
-    progCode = models.CharField(max_length=30)
-    projCode = models.CharField(max_length=30)
+    progCode = models.CharField(max_length=30, blank=True)
+    projCode = models.CharField(max_length=30, blank=True)
     startDate = models.DateField
     endDate = models.DateField
-    ir35 = models.CharField
+    ir35 = models.BooleanField(default=False)
     projectFee = models.DecimalField
     retentionFee = models.DecimalField
     contractEndMonth = models.DateField
     contractEndMothInc = models.DateField
 
-    DM = 'DM'
-    PM = 'PM'
-    UR = 'UR'
-    DEV = 'DEV'
-    TA = 'TA'
-    DES = 'DES'
-    UXD = 'UXD'
-    DEFAULT_ROLE = 'd'
-
-    roleChoices = [
-        (DM, 'Delivery Manager'),
-        (PM, 'Product Manager'),
-        (UR, 'User Researcher'),
-        (DEV, 'Developer'),
-        (TA, 'Technical Architect'),
-        (DES, 'Designer'),
-        (UXD, 'UX Designer'),
-        (DEFAULT_ROLE, 'Please select a role...')
-    ]
-
-    role = models.CharField(
-        max_length=30,
-        choices=roleChoices,
-        default=DEFAULT_ROLE
-    )
+    
