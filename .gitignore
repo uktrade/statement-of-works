@@ -8,6 +8,7 @@ sow/scripts/generated_doc.docx
 *.pyc
 *.sqlite3
 *.DS_STORE
+.~lock*
 
 # Frontend
 node_modules
