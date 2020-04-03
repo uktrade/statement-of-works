@@ -6,3 +6,10 @@ __pycache__/
 *$py.class
 generated_doc*.docx
 .~lock*
+*.sqlite3
+*.DS_STORE
+
+# Frontend
+node_modules
+*~
+static/
