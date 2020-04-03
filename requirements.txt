@@ -1,0 +1,13 @@
+asgiref==3.2.7
+Django==3.0.5
+django-cors-headers==3.2.1
+djangorestframework==3.11.0
+docxtpl==0.6.3
+Jinja2==2.11.1
+lxml==4.5.0
+MarkupSafe==1.1.1
+python-dateutil==2.8.1
+python-docx==0.8.7
+pytz==2019.3
+six==1.14.0
+sqlparse==0.3.1

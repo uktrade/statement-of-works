@@ -1,2 +1,15 @@
 .venv
 .vscode
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+sow/scripts/generated_doc.docx
+*.pyc
+*.sqlite3
+*.DS_STORE
+
+# Frontend
+node_modules
+*~
+static/
