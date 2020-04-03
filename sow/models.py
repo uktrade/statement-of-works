@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 
 # Create your models here.
 
@@ -18,7 +19,7 @@ class StatementOfWork(models.Model):
 
     company_name = models.CharField(max_length=30)
     slot_code = models.CharField(max_length=5)
-    nominated_worker = models.BooleanField()  # checkbox
+    nominated_worker = models.BooleanField()
     
     HM1 = '1'
     HM2 = '2'
@@ -81,12 +82,10 @@ class StatementOfWork(models.Model):
 
     prog_code = models.CharField(max_length=30, blank=True)
     proj_code = models.CharField(max_length=30, blank=True)
-    start_date = models.DateField
-    end_date = models.DateField
+    start_date = models.DateField(default=date.today)
+    end_date = models.DateField(default=date.today)
     ir35 = models.BooleanField(default=False)
-    project_fee = models.DecimalField
-    retention_fee = models.DecimalField
-    contract_end_month = models.DateField
-    contract_end_month_inc = models.DateField
-
-    
+    project_fee = models.DecimalField(decimal_places=2, max_digits=5)
+    retention_fee = models.DecimalField(decimal_places=2, max_digits=5)
+    contract_end_month = models.DateField(default=date.today)
+    contract_end_month_inc = models.DateField(default=date.today)
