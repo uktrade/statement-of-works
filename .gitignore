@@ -4,10 +4,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
-sow/scripts/generated_doc.docx
 *.pyc
 *.sqlite3
 *.DS_STORE
+generated_doc*.docx
 .~lock*
 
 # Frontend

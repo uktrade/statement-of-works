@@ -1,66 +1,22 @@
-from docxtpl import DocxTemplate
 from datetime import timedelta, datetime, date
+from decimal import Decimal, ROUND_UP
+
+from docxtpl import DocxTemplate
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse
-from decimal import Decimal, ROUND_UP
+
+from calculations import (
+    calculate_contract_length,
+    calculate_number_of_payments,
+    calculate_working_days,
+    calculate_contract_fee,
+    calculate_retention_fee,
+    calculate_base_monthly_payment,
+    calculate_last_payment,
+)
 
 TEMPLATE_FILENAME = 'sow_template.docx'
 GENERATED_FILENAME = 'generated_doc.docx'
-
-
-def calculate_contract_length(parsed_start, parsed_end):
-    return relativedelta(parsed_end, parsed_start)
-
-
-def calculate_number_of_payments(number_of_months, number_of_days):
-    if number_of_days > 0:
-        return number_of_months + 1
-    return number_of_months
-
-
-def calculate_prorata_for_last_payment(number_of_days):
-    average_days_in_a_month = 30
-    return number_of_days / average_days_in_a_month
-
-
-def calculate_contract_fee(
-    day_rate, number_of_months, prorata_for_last_payment
-):
-    paid_working_days_in_month = 20
-    # work out the number of working days between the start and end date
-    # also need to add an option to remove working days for leave
-
-    if prorata_for_last_payment > 0:
-        return Decimal(
-            day_rate
-            * paid_working_days_in_month
-            * (number_of_months + prorata_for_last_payment)
-        ).quantize(Decimal('0.01'), rounding=ROUND_UP)
-    return Decimal(
-        day_rate * paid_working_days_in_month * number_of_months
-    ).quantize(Decimal('0.01'), rounding=ROUND_UP)
-
-
-def calculate_retention_fee(contract_fee):
-    retention_fee_percentage = Decimal(0.05)
-
-    return Decimal(contract_fee * retention_fee_percentage).quantize(
-        Decimal('0.01'), rounding=ROUND_UP
-    )
-
-
-def calculate_base_monthly_payment(contract_fee, number_of_payments):
-    return Decimal((contract_fee / number_of_payments) * 0.95).quantize(
-        Decimal('0.01'), rounding=ROUND_UP
-    )
-
-
-def calculate_last_payment(base_monthly_payment, retention_fee):
-    return base_monthly_payment + retention_fee
-
-
-def month_to_string(parsed_date):
-    return (parsed_date).strftime('%B')
 
 
 def generate_statement_of_works(
@@ -87,39 +43,58 @@ def generate_statement_of_works(
     contract_length = calculate_contract_length(
         parsed_start_date, parsed_end_date
     )
-    contract_fee = calculate_contract_fee(
-        day_rate,
-        contract_length.months,
-        calculate_prorata_for_last_payment(contract_length.days),
-    )
+    working_days = calculate_working_days(parsed_start_date, parsed_end_date)
+    contract_fee = calculate_contract_fee(day_rate, working_days)
     retention_fee = calculate_retention_fee(contract_fee)
-    contract_end_month = month_to_string(parsed_end_date)
-    contract_end_month_plus_one = month_to_string(
+    contract_end_month = parsed_end_date.strftime('%B')
+    contract_end_month_plus_one = (
         parsed_end_date + relativedelta(months=+1)
+    ).strftime('%B')
+    number_of_payments = calculate_number_of_payments(
+        contract_length.months, contract_length.days
     )
+    base_monthly_payment = calculate_base_monthly_payment(
+        contract_fee, number_of_payments
+    )
+
+    payment_schedule = []
+
+    for i in range(number_of_payments):
+        payment_schedule.append(
+            {
+                "date": (
+                    parsed_start_date + relativedelta(months=+i)
+                ).strftime("%B %Y"),
+                "fee": f"£{base_monthly_payment:.2f}"
+                if i < number_of_payments - 1
+                else f"£{base_monthly_payment + retention_fee:.2f}",
+                "payment_date": (
+                    parsed_start_date + relativedelta(months=+(i + 1))
+                ).strftime("%B %Y"),
+            }
+        )
 
     # now run the thing
     doc = DocxTemplate(TEMPLATE_FILENAME)
     context = {
-        'company_name': company_name,
-        'slot_code': slot_code,
-        'nominated_worker': nominated_worker,
-        # make boolean
-        'hiring_manager': hiring_manager,
-        'team': team,
-        'project_description': project_description,
-        'role': role,
-        'cost_code': cost_code,
-        'programme_code': programme_code,
-        'project_code': project_code,
-        'start_date': stringified_start_date,
-        'end_date': stringified_end_date,
-        'outside_IR35': outside_IR35,
-        # make boolean
-        'contract_fee': f'£{contract_fee:.2f}',
-        'retention_fee': f'£{retention_fee:.2f}',
-        'contract_end_month': contract_end_month,
-        'contract_end_month_plus_one': contract_end_month_plus_one,
+        "company_name": company_name,
+        "slot_code": slot_code,
+        "nominated_worker": "Yes" if nominated_worker else "No",
+        "hiring_manager": hiring_manager,
+        "team": team,
+        "project_description": project_description,
+        "role": role,
+        "cost_code": cost_code,
+        "programme_code": programme_code,
+        "project_code": project_code,
+        "start_date": stringified_start_date,
+        "end_date": stringified_end_date,
+        "outside_IR35": "Outside" if outside_IR35 else "Inside",
+        "contract_fee": f"£{contract_fee:.2f}",
+        "retention_fee": f"£{retention_fee:.2f}",
+        "contract_end_month": contract_end_month,
+        "contract_end_month_plus_one": contract_end_month_plus_one,
+        "payment_schedule": payment_schedule,
     }
     doc.render(context)
     doc.save(GENERATED_FILENAME)
