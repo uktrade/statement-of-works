@@ -14,6 +14,14 @@ class Role(models.Model):
     role_description = models.TextField(blank=True)
     role_deliverable1 = models.TextField(blank=True)
     role_deliverable2 = models.TextField(blank=True)
+    role_deliverable3 = models.TextField(blank=True)
+    role_deliverable4 = models.TextField(blank=True)
+    role_deliverable5 = models.TextField(blank=True)
+    role_deliverable6 = models.TextField(blank=True)
+    role_deliverable7 = models.TextField(blank=True)
+    role_deliverable8 = models.TextField(blank=True)
+    role_deliverable9 = models.TextField(blank=True)
+    role_deliverable10 = models.TextField(blank=True)
 
 class StatementOfWork(models.Model):
 
