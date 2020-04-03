@@ -11,12 +11,13 @@ class Role(models.Model):
 
     roleName = models.CharField(max_length = 30)
     roleDescription = models.TextField(blank=True)
-    roleDeliverables = models.TextField(blank=True)
+    roleDeliverable1 = models.TextField(blank=True)
+    roleDeliverable2 = models.TextField(blank=True)
 
 class StatementOfWork(models.Model):
 
     companyName = models.CharField(max_length=30)
-    slotCode = models.CharField(max_length=30)
+    slotCode = models.CharField(max_length=5)
     nominatedWorker = models.BooleanField()  # checkbox
     
     HM1 = '1'
