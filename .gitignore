@@ -4,4 +4,5 @@
 __pycache__/
 *.py[cod]
 *$py.class
-sow/scripts/generated_doc.docx
+generated_doc*.docx
+.~lock*
