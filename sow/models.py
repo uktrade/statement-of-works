@@ -4,53 +4,53 @@ from django.db import models
 
 class Role(models.Model):
     class Meta:
-        ordering = ['roleName']
+        ordering = ['role_name']
     
     def __str__(self):
-        return self.roleName
+        return self.role_name
 
-    roleName = models.CharField(max_length = 30)
-    roleDescription = models.TextField(blank=True)
-    roleDeliverable1 = models.TextField(blank=True)
-    roleDeliverable2 = models.TextField(blank=True)
+    role_name = models.CharField(max_length = 30)
+    role_description = models.TextField(blank=True)
+    role_deliverable1 = models.TextField(blank=True)
+    role_deliverable2 = models.TextField(blank=True)
 
 class StatementOfWork(models.Model):
 
-    companyName = models.CharField(max_length=30)
-    slotCode = models.CharField(max_length=5)
-    nominatedWorker = models.BooleanField()  # checkbox
+    company_name = models.CharField(max_length=30)
+    slot_code = models.CharField(max_length=5)
+    nominated_worker = models.BooleanField()  # checkbox
     
     HM1 = '1'
     HM2 = '2'
     HM3 = '3'
     DEFAULT_HM = 'DEFAULT'
 
-    hmChoices = [
+    hm_choices = [
         (HM1, 'option 1'),
         (HM2, 'option 2'),
         (HM3, 'option 3'),
         (DEFAULT_HM, 'Please select a hiring manager...')
     ]
 
-    hiringManager = models.CharField(
+    hiring_manager = models.CharField(
         max_length=30,
-        choices = hmChoices,
+        choices = hm_choices,
         default = DEFAULT_HM
     )
 
     DEFAULT_TEAM = 'DEFAULT'
 
-    teamChoices = [
+    team_choices = [
         (DEFAULT_TEAM, 'DDaT / Data Team')
     ]
 
     team = models.CharField(
         max_length=30,
-        choices = teamChoices,
+        choices = team_choices,
         default = DEFAULT_TEAM
         )
 
-    projectDescription = models.TextField()
+    project_description = models.TextField()
 
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     
@@ -62,7 +62,7 @@ class StatementOfWork(models.Model):
     SPIRE = 'S'
     DEFAULT_CCODE = 'DEFAULT'
 
-    ccChoices = [
+    cc_choices = [
         (STRATEGY, 'Strategy - 109711'),
         (TECH, 'Technology - 10971'),
         (DIGITAL, 'Digital - 109713'),
@@ -73,20 +73,20 @@ class StatementOfWork(models.Model):
 
     ]
 
-    costCentreCode = models.CharField(
+    cost_centre_code = models.CharField(
         max_length=30,
-        choices=ccChoices,
+        choices=cc_choices,
         default=DEFAULT_CCODE
     )
 
-    progCode = models.CharField(max_length=30, blank=True)
-    projCode = models.CharField(max_length=30, blank=True)
-    startDate = models.DateField
-    endDate = models.DateField
+    prog_code = models.CharField(max_length=30, blank=True)
+    proj_code = models.CharField(max_length=30, blank=True)
+    start_date = models.DateField
+    end_date = models.DateField
     ir35 = models.BooleanField(default=False)
-    projectFee = models.DecimalField
-    retentionFee = models.DecimalField
-    contractEndMonth = models.DateField
-    contractEndMothInc = models.DateField
+    project_fee = models.DecimalField
+    retention_fee = models.DecimalField
+    contract_end_month = models.DateField
+    contract_end_month_inc = models.DateField
 
     
