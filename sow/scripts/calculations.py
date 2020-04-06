@@ -45,7 +45,3 @@ def calculate_base_monthly_payment(contract_fee, number_of_payments):
     return Decimal(
         (contract_fee / number_of_payments) * Decimal(0.95)
     ).quantize(Decimal('0.01'), rounding=ROUND_UP)
-
-
-def calculate_last_payment(base_monthly_payment, retention_fee):
-    return base_monthly_payment + retention_fee
