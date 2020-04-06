@@ -11,6 +11,6 @@ generated_doc*.docx
 .~lock*
 
 # Frontend
-node_modules
+frontend/node_modules
 *~
 static/

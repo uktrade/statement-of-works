@@ -1,5 +1,4 @@
 from decimal import Decimal, ROUND_UP
-from datetime import date
 
 from dateutil.relativedelta import relativedelta
 from workalendar.europe import UnitedKingdom
