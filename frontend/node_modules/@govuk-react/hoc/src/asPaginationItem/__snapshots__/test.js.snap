@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asPaginationItem matches wrapper snapshot: wrapper mount 1`] = `
+<styled.li>
+  <a
+    href="https://example.com"
+  >
+    <styled.div>
+      Example
+    </styled.div>
+  </a>
+</styled.li>
+`;

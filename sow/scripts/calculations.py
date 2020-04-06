@@ -4,10 +4,10 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from workalendar.europe import UnitedKingdom
 
-cal = UnitedKingdom()
+calendar = UnitedKingdom()
 
 
-def calculate_contract_length(parsed_start, parsed_end):
+def calculate_contract_duration(parsed_start, parsed_end):
     return relativedelta(parsed_end, parsed_start)
 
 
@@ -18,7 +18,7 @@ def calculate_number_of_payments(number_of_months, number_of_days):
 
 
 def calculate_working_days(parsed_start, parsed_end):
-    return cal.get_working_days_delta(
+    return calendar.get_working_days_delta(
         # need to move start date back one day as the
         # get_working_day_delta calculation doesn't include the first day.
         # A simple +1 wouldn't work if the first day is a holiday.
