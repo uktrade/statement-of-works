@@ -15,3 +15,4 @@ generated_doc*.docx
 node_modules
 *~
 static/
+package-lock.json
