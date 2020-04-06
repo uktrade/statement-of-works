@@ -5,88 +5,57 @@ from datetime import date
 
 class Role(models.Model):
     class Meta:
-        ordering = ['role_name']
+        ordering = ['name']
     
     def __str__(self):
-        return self.role_name
+        return self.name
 
-    role_name = models.CharField(max_length = 30)
-    role_description = models.TextField(blank=True)
-    role_deliverable1 = models.TextField(blank=True)
-    role_deliverable2 = models.TextField(blank=True)
-    role_deliverable3 = models.TextField(blank=True)
-    role_deliverable4 = models.TextField(blank=True)
-    role_deliverable5 = models.TextField(blank=True)
-    role_deliverable6 = models.TextField(blank=True)
-    role_deliverable7 = models.TextField(blank=True)
-    role_deliverable8 = models.TextField(blank=True)
-    role_deliverable9 = models.TextField(blank=True)
-    role_deliverable10 = models.TextField(blank=True)
+    name = models.CharField(max_length = 30)
+    description = models.TextField(blank=True)
+
+class Deliverable(models.Model):
+    """Deliverable model."""
+
+    description = models.TextField()
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+
+class HiringManager(models.Model):
+    class Meta:
+        ordering = ['name']
+        
+    name = models.CharField(max_length=100)
+
+class Team(models.Model):
+    class Meta:
+        ordering = ['name']
+    
+    name = models.CharField(max_length=50)
+
+class CostCentreCode(models.Model):
+    class Meta:
+        ordering = ['department']
+
+    def __str__(self):
+        return self.department + ' - %d' % self.code
+
+    department = models.CharField(max_length=50)
+    code = models.IntegerField()
 
 class StatementOfWork(models.Model):
 
-    company_name = models.CharField(max_length=30)
+    company_name = models.CharField(max_length=160)
     slot_code = models.CharField(max_length=5)
     nominated_worker = models.BooleanField()
     
-    HM1 = '1'
-    HM2 = '2'
-    HM3 = '3'
-    DEFAULT_HM = 'DEFAULT'
+    hiring_manager = models.ForeignKey(HiringManager, on_delete=models.CASCADE)
 
-    hm_choices = [
-        (HM1, 'option 1'),
-        (HM2, 'option 2'),
-        (HM3, 'option 3'),
-        (DEFAULT_HM, 'Please select a hiring manager...')
-    ]
-
-    hiring_manager = models.CharField(
-        max_length=30,
-        choices = hm_choices,
-        default = DEFAULT_HM
-    )
-
-    DEFAULT_TEAM = 'DEFAULT'
-
-    team_choices = [
-        (DEFAULT_TEAM, 'DDaT / Data Team')
-    ]
-
-    team = models.CharField(
-        max_length=30,
-        choices = team_choices,
-        default = DEFAULT_TEAM
-        )
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     project_description = models.TextField()
 
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     
-    STRATEGY = 'ST'
-    TECH = 'T'
-    DIGITAL = 'DIG'
-    DATA = 'DAT'
-    DABOPS = 'DA'
-    SPIRE = 'S'
-    DEFAULT_CCODE = 'DEFAULT'
-
-    cc_choices = [
-        (STRATEGY, 'Strategy - 109711'),
-        (TECH, 'Technology - 10971'),
-        (DIGITAL, 'Digital - 109713'),
-        (DATA, 'Data - 109714'),
-        (DABOPS, 'DDaT Director and Business Operations - 109715'),
-        (SPIRE, 'SPIRE - 109376'),
-        (DEFAULT_CCODE, 'Please select a cost code...')
-
-    ]
-
-    cost_centre_code = models.CharField(
-        max_length=30,
-        choices=cc_choices,
-        default=DEFAULT_CCODE
-    )
+    cost_centre_code = models.ForeignKey(CostCentreCode, on_delete=models.CASCADE)
 
     prog_code = models.CharField(max_length=30, blank=True)
     proj_code = models.CharField(max_length=30, blank=True)
