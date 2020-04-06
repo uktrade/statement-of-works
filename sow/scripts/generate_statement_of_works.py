@@ -11,8 +11,7 @@ from calculations import (
     calculate_working_days,
     calculate_contract_fee,
     calculate_retention_fee,
-    calculate_base_monthly_payment,
-    calculate_last_payment,
+    calculate_base_monthly_payment
 )
 
 TEMPLATE_FILENAME = 'sow_template.docx'
