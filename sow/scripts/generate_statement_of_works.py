@@ -11,7 +11,7 @@ from calculations import (
     calculate_working_days,
     calculate_contract_fee,
     calculate_retention_fee,
-    calculate_base_monthly_payment
+    calculate_base_monthly_payment,
 )
 
 TEMPLATE_FILENAME = 'sow_template.docx'
@@ -33,8 +33,8 @@ def generate_statement_of_works(
     end_date,
     outside_IR35,
     day_rate,
+    modules,
 ):
-    # prep the variables
     parsed_start_date = parse(start_date)
     parsed_end_date = parse(end_date)
     stringified_start_date = parsed_start_date.strftime('%-d %B %Y')
@@ -73,45 +73,39 @@ def generate_statement_of_works(
             }
         )
 
-    # now run the thing
     doc = DocxTemplate(TEMPLATE_FILENAME)
     context = {
-        "company_name": company_name,
-        "slot_code": slot_code,
-        "nominated_worker": "Yes" if nominated_worker else "No",
-        "hiring_manager": hiring_manager,
-        "team": team,
-        "project_description": project_description,
-        "role": role,
-        "cost_code": cost_code,
-        "programme_code": programme_code,
-        "project_code": project_code,
-        "start_date": stringified_start_date,
-        "end_date": stringified_end_date,
-        "outside_IR35": "Outside" if outside_IR35 else "Inside",
-        "contract_fee": f"£{contract_fee:.2f}",
-        "retention_fee": f"£{retention_fee:.2f}",
-        "contract_end_month": contract_end_month,
-        "contract_end_month_plus_one": contract_end_month_plus_one,
-        "payment_schedule": payment_schedule,
+        'company_name': company_name,
+        'slot_code': slot_code,
+        'nominated_worker': 'Yes' if nominated_worker else 'No',
+        'hiring_manager': hiring_manager,
+        'team': team,
+        'project_description': project_description,
+        'role': role,
+        'cost_code': cost_code,
+        'programme_code': programme_code,
+        'project_code': project_code,
+        'start_date': stringified_start_date,
+        'end_date': stringified_end_date,
+        'outside_IR35': 'Outside' if outside_IR35 else 'Inside',
+        'contract_fee': f'£{contract_fee:.2f}',
+        'retention_fee': f'£{retention_fee:.2f}',
+        'contract_end_month': contract_end_month,
+        'contract_end_month_plus_one': contract_end_month_plus_one,
+        'payment_schedule': payment_schedule,
+        'modules': modules
+        # this will be removed later, but here to illustrate the required shape of the modules data
+        # the document can handle rich text, but this will need to be escaped in the template
+        # [
+        #     {
+        #         'deliverables': [
+        #             'wefihwofgihwofih',
+        #             'feroihegiohergioeghi. ergoiheg iegheg hi',
+        #         ],
+        #         'completion_date': '12 March 2021',
+        #     },
+        #     {'deliverables': ['', '', ''], 'completion_date': '12 June 2021'},
+        # ],
     }
     doc.render(context)
     doc.save(GENERATED_FILENAME)
-
-
-generate_statement_of_works(
-    '123 Inc',
-    '1234',
-    'No',
-    'Christopher Sunkel',
-    'Data Hub',
-    'blah',
-    'Developer',
-    '4321',
-    '9876',
-    '89472',
-    '2018-09-12',
-    '2019-03-31',
-    'Outside',
-    525,
-)
