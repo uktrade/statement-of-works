@@ -8,3 +8,5 @@ __pycache__/
 *.sqlite3
 *.DS_STORE
 sow/scripts/generated_doc.docx
+generated_doc*.docx
+.~lock*
