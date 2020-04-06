@@ -10,3 +10,8 @@ __pycache__/
 sow/scripts/generated_doc.docx
 generated_doc*.docx
 .~lock*
+
+# Frontend
+node_modules
+*~
+static/
