@@ -1,0 +1,97 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "plugin:prettier/recommended",
+        "prettier/react"
+    ],
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-hooks",
+        "import",
+        "mocha",
+        "jsx-a11y"
+    ],
+    "rules": {
+        "no-async-promise-executor": "off",
+        "no-case-declarations": "off",
+        "no-prototype-builtins": "off",
+        "no-unused-vars": "error",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "node/no-deprecated-api": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "off",
+        "react/prefer-stateless-function": "off",
+        "react/no-multi-comp": "off",
+        "react/forbid-prop-types": "off",
+        "react/jsx-boolean-value": [
+        "error",
+        "always"
+    ],
+    "react/jsx-one-expression-per-line": "off",
+    "object-curly-newline": "off",
+    "no-else-return": "off",
+    "arrow-body-style": "off",
+    "dot-notation": "error",
+    "mocha/no-exclusive-tests": "error",
+    "import/newline-after-import": [
+        "error",
+        {
+            "count": 1
+        }
+    ],
+    "eol-last": "error",
+    "no-multiple-empty-lines": [
+        "error",
+        {
+            "max": 1
+        }
+    ],
+    "no-undef": "error",
+    "no-console": [
+        "error",
+        {
+            "allow": [
+                "assert"
+            ]
+        }
+    ]
+    },
+    "overrides": [
+        {
+            "globals": {
+                "JSDOM": true,
+                "formMacros": true,
+                "expect": true,
+                "proxyquire": true,
+                "sinon": true,
+                "nock": true,
+                "rootPath": true,
+                "globalReq": true,
+                "globalRes": true
+            },
+            "rules": {
+                "no-unused-expressions": 0
+            },
+            "files": [
+                "**.test.{js,jsx}"
+            ],
+            "env": {
+                "mocha": true,
+                "browser": true
+            }
+        }
+    ]
+    }
