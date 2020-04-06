@@ -29,11 +29,17 @@ class HiringManager(models.Model):
     class Meta:
         ordering = ['name']
 
+    def __str__(self):
+        return self.name
+
     name = models.CharField(max_length=100)
 
 class Team(models.Model):
     class Meta:
         ordering = ['name']
+    
+    def __str__(self):
+        return self.name
     
     name = models.CharField(max_length=50)
 
