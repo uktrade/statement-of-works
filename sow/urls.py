@@ -11,5 +11,7 @@ urlpatterns = [
     path('hiringmanager/<int:pk>', views.HiringManagerDetail.as_view()),
     path('role/', views.RoleList.as_view()),
     path('role/<int:pk>', views.RoleDetail.as_view()),
+    path('team/', views.TeamList.as_view()),
+    path('team/<int:pk>', views.TeamDetail.as_view()),
     
 ]

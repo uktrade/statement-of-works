@@ -21,4 +21,8 @@ class RoleSerializer(ModelSerializer):
         model = Role
         fields = ('name', 'description')
 
+class TeamSerializer(ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ('name',)
 
