@@ -26,6 +26,7 @@ def generate_statement_of_works(
     team,
     project_description,
     role,
+    role_description
     cost_code,
     programme_code,
     project_code,
@@ -82,6 +83,7 @@ def generate_statement_of_works(
         'team': team,
         'project_description': project_description,
         'role': role,
+        'role_description': role_description,
         'cost_code': cost_code,
         'programme_code': programme_code,
         'project_code': project_code,
