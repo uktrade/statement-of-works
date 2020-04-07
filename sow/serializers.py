@@ -6,6 +6,11 @@ class CostCentreCodeSerializer(ModelSerializer):
         model = CostCentreCode
         fields = ('department', 'code')
 
+class DeliverableSerializer(ModelSerializer):
+    class Meta:
+        model = Deliverable
+        fields = ('title', 'description', 'role')
+
 class RoleSerializer(ModelSerializer):
     class Meta:
         model = Role
