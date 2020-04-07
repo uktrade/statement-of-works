@@ -11,8 +11,14 @@ class DeliverableSerializer(ModelSerializer):
         model = Deliverable
         fields = ('title', 'description', 'role')
 
+class HiringManagerSerializer(ModelSerializer):
+    class Meta:
+        model = HiringManager
+        fields = ('name',)
+
 class RoleSerializer(ModelSerializer):
     class Meta:
         model = Role
         fields = ('name', 'description')
+
 
