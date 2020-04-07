@@ -1,9 +1,19 @@
 from django.shortcuts import render
-from .models import Role
-from .serializers import RoleSerializer
+from .models import CostCentreCode, Deliverable, HiringManager, Role, Team
+from .serializers import CostCentreCodeSerializer, RoleSerializer
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
 # Create your views here.
+
+class CostCentreCodeList(ListAPIView):
+    """List API view for CostCentreCode."""
+    queryset = CostCentreCode.objects
+    serializer_class = CostCentreCodeSerializer
+
+class CostCentreCodeDetail(RetrieveAPIView):
+    """List API view for one CostCentreCode."""
+    queryset = CostCentreCode.objects
+    serializer_class = CostCentreCodeSerializer
 
 class RoleList(ListAPIView):
     """List API view for Roles."""
