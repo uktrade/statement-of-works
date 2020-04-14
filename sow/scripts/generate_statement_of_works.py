@@ -104,14 +104,14 @@ def generate_statement_of_works(
 
 
 generate_statement_of_works(
-    '123 Inc',
+    'Shinjuku Daifuku - the bonsai tree',
     '1234',
     'No',
-    'Christopher Sunkel',
+    'Nicky the Gong',
     'Data Hub',
-    'blah',
+    'blah blah CRM blah',
     'Developer',
-    'do Dev stuff',
+    'do Developer stuff',
     '4321',
     '9876',
     '89472',
@@ -122,11 +122,18 @@ generate_statement_of_works(
     [
         {
             'deliverables': [
-                'wefihwofgihwofih',
-                'feroihegiohergioeghi. ergoiheg iegheg hi',
+                'do amazing things',
+                'do amazing things while standing on your head',
             ],
-            'completion_date': '12 March 2021',
+            'completion_date': '31 December 2018',
         },
-        {'deliverables': ['', '', ''], 'completion_date': '12 June 2021'},
+        {
+            'deliverables': [
+                'rinse and repeat',
+                'be kind unto others',
+                'bring in tasty snacks',
+            ],
+            'completion_date': '31 March 2019',
+        },
     ],
 )
