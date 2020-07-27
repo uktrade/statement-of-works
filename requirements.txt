@@ -40,5 +40,5 @@ sqlparse==0.3.1
 toml==0.10.0
 typed-ast==1.4.1
 wcwidth==0.1.9
-workalendar==8.2.1
+workalendar==10.3.0
 zipp==3.1.0
