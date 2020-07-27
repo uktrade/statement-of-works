@@ -13,7 +13,7 @@ importlib-metadata==1.6.0
 Jinja2==2.11.1
 jplephem==2.14
 lunardate==0.2.0
-lxml==4.5.0
+lxml==4.5.2
 MarkupSafe==1.1.1
 mccabe==0.6.1
 more-itertools==8.4.0
