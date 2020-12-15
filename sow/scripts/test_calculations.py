@@ -33,15 +33,21 @@ def test_calculate_number_of_payments(a, b, expected):
     assert calculate_number_of_payments(a, b) == expected
 
 
-def test_calculate_working_days():
+@pytest.mark.parametrize(
+    "a, b, c, expected",
+    [
+        (parse('2020-01-01'), parse('2020-03-31'), 3, 59),
+        (parse('2020-01-01'), parse('2020-06-30'), 6, 115),
+        (parse('2020-01-01'), parse('2020-05-31'), 5, 94),
+    ],
+)
+def test_calculate_working_days(a, b, c, expected):
     """
     Test the calculation of working days. It should move the start date back
     by one because the working days calculation doesn't
     include the first day by default.
     """
-    assert (
-        calculate_working_days(parse('2020-01-01'), parse('2020-03-31')) == 64
-    )
+    assert calculate_working_days(a, b, c) == expected
 
 
 @pytest.mark.parametrize(

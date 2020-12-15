@@ -44,7 +44,9 @@ def generate_statement_of_works(
     contract_length = calculate_contract_duration(
         parsed_start_date, parsed_end_date
     )
-    working_days = calculate_working_days(parsed_start_date, parsed_end_date)
+    working_days = calculate_working_days(
+        parsed_start_date, parsed_end_date, contract_length.months
+    )
     contract_fee = calculate_contract_fee(day_rate, working_days)
     retention_fee = calculate_retention_fee(contract_fee)
     contract_end_month = parsed_end_date.strftime('%B')

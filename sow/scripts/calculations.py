@@ -1,5 +1,6 @@
 from decimal import Decimal, ROUND_UP
 from datetime import date
+from math import floor
 
 from dateutil.relativedelta import relativedelta
 from workalendar.europe import UnitedKingdom
@@ -17,13 +18,20 @@ def calculate_number_of_payments(number_of_months, number_of_days):
     return number_of_months
 
 
-def calculate_working_days(parsed_start, parsed_end):
-    return calendar.get_working_days_delta(
-        # need to move start date back one day as the
-        # get_working_day_delta calculation doesn't include the first day.
-        # A simple +1 wouldn't work if the first day is a holiday.
-        parsed_start + relativedelta(days=-1),
-        parsed_end,
+def calculate_working_days(parsed_start, parsed_end, number_of_months):
+    set_days_off_per_month = 1.6666666666666667
+    days_of = number_of_months * set_days_off_per_month
+    return floor(
+        (
+            calendar.get_working_days_delta(
+                # need to move start date back one day as the
+                # get_working_day_delta calculation doesn't include the first day.
+                # A simple +1 wouldn't work if the first day is a holiday.
+                parsed_start + relativedelta(days=-1),
+                parsed_end,
+            )
+            - days_of
+        )
     )
 
 
