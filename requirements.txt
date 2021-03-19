@@ -5,7 +5,7 @@ black==19.10b0
 click==7.1.1
 Django==3.1.6
 django-cors-headers==3.4.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 docxtpl==0.10.0
 entrypoints==0.3
 flake8==3.7.9
